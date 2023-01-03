@@ -1,6 +1,8 @@
 package golang
 
 import (
+	"fmt"
+
 	"github.com/kyleconroy/sqlc/internal/compiler"
 	"github.com/kyleconroy/sqlc/internal/config"
 )
@@ -11,7 +13,10 @@ func goType(r *compiler.Result, col *compiler.Column, settings config.CombinedSe
 		if oride.GoTypeName == "" {
 			continue
 		}
+		fmt.Printf("%+v\n", oride)
 		sameTable := oride.Matches(col.Table, r.Catalog.DefaultSchema)
+		fmt.Printf("  col: %+v\n", *col)
+		fmt.Printf("  sameTable: %+v\n", sameTable)
 		if oride.Column != "" && oride.ColumnName.MatchString(col.Name) && sameTable {
 			return oride.GoTypeName
 		}
